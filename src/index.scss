@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+
+}
+
+.note{
+  background: white;
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  align-items: center;
+  padding: 10px;
+  font-family: Onest, sans-serif;
+
+  &__head{
+    display: flex;
+    column-gap: 50px;
+    align-items: center;
+
+    &-icon{
+    font-size: 30px;
+      color: cornflowerblue;
+
+    }
+    &-title{
+      color: #b15e55;
+      width: 377px;
+      max-width: 377px;
+    }
+  }
+  &__title{
+    margin-top: 15%;
+  }
+
+  &__note{
+    background: #f7f7f7;
+    border-radius: 7px;
+    width: 457px;
+    box-shadow: 8px 16px 32px rgb(229, 255, 255);
+  }
+  &__content{
+    width: 100%;
+    padding: 0 13px 15px;
+    background: #f7f7f7;
+    white-space: pre-wrap;
+    min-height: 350px;
+
+    &-title{
+      font-size: 35px;
+      margin: 10px 0 25px;
+    }
+    &-text{
+      padding: 7px;
+      font-size: 18px;
+
+    }
+    &-date{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      font-size: 15px;
+      background: #ececec;
+
+      width: 100%;
+      padding: 13px 17px;
+
+      border-radius: 7px 7px 0 0 ;
+      &-text{
+        color: #b2d5d2;
+      }
+    }
+    &-list{
+      display: flex;
+      flex-direction: column;
+      row-gap: 8px;
+      margin: 10px 0 ;
+    }
+    &-item{
+      font-size: 18px;
+      margin-left: 25px;
+    }
+  }
+  &__icons{
+    display: flex;
+    column-gap: 5px;
+    align-items: center;
+    &-trash{
+      color: red;
+      font-size: 17px;
+    }
+    &-check{
+      color: green;
+      font-size: 16px;
+    }
+    &-pencil{
+      color: orange;
+      font-size: 16px;
+    }
+  }
+  &__textarea{
+    width: 100%;
+    padding: 15px 10px;
+    height: 350px;
+    font-size: 18px;
+    border: orange 1px solid;
+    outline: none;
+    resize: none;
+    font-family: Indie+Flower&
+
+
+
+
+  }
+}

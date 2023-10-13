@@ -1,8 +1,7 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
 import {INote, NotesAsync} from "../../../interface/app.interface";
-import {text} from "stream/consumers";
-import exp from "constants";
+
 
 const initialState:NotesAsync = {
     notes:  [],
@@ -31,8 +30,8 @@ export const getNotes = createAsyncThunk(
     }
 );
 
-export const sendNote = createAsyncThunk(
-    "note/sendNote",
+export const createNote = createAsyncThunk(
+    "note/createNote",
         async  (note: INote) => {
             try {
                 const response = await axios.post("http://localhost:8080/notes", note)
@@ -63,6 +62,27 @@ export const changeNote = createAsyncThunk(
             if (response.status !== 200){
                 throw new Error("Ошибка при запросе данных")
 
+            }
+            console.log(response.data)
+
+            return response.data
+        } catch (err) {
+            if (err instanceof Error){
+                console.log(err.message)
+            }else {
+                console.log('Unexpected error', err)
+            }
+        }
+    }
+
+)
+export const removeNote = createAsyncThunk(
+    "note/removeNote",
+    async  (id: number) => {
+        try {
+            const response = await axios.delete(`http://localhost:8080/notes/${id}`)
+            if (response.statusText !== "OK"){
+                throw new Error("Ошибка при запросе данных")
             }
 
             return response.data
@@ -127,15 +147,15 @@ const notesSlice = createSlice({
                 state.notes = action.payload
                 state.status = "done"
             })
-            .addCase(sendNote.pending, (state) => {
+            .addCase(createNote.pending, (state) => {
                 state.status = "loading"
                 state.error = ""
             })
-            .addCase(sendNote.rejected,(state, action) => {
+            .addCase(createNote.rejected,(state, action) => {
                 state.status = "error"
                 state.error = action.payload as string
             })
-            .addCase(sendNote.fulfilled,(state, action) => {
+            .addCase(createNote.fulfilled,(state, action) => {
                 state.notes = [...state.notes, action.payload]
                 state.status = "done"
             })
@@ -150,9 +170,22 @@ const notesSlice = createSlice({
             .addCase(changeNote.fulfilled,(state, action) => {
                 const updatedNote = action.payload;
                 state.notes = state.notes.map((note) =>
-                    note.id === updatedNote.id ? updatedNote : note
+                    note?.id === updatedNote?.id ? updatedNote : note
                 );
                 state.status = "done";
+            })
+            .addCase(removeNote.pending, (state) => {
+                state.status = "loading"
+                state.error = ""
+            })
+            .addCase(removeNote.rejected,(state, action) => {
+                state.status = "error"
+                state.error = action.payload as string
+            })
+            .addCase(removeNote.fulfilled,(state, action) => {
+                const deletedNoteId = action.payload
+                state.notes = state.notes.filter((note) => note.id !== deletedNoteId)
+                state.status = "done"
             })
 
 
